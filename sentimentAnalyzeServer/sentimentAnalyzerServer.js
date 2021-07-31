@@ -29,15 +29,8 @@ app.get("/",(req,res)=>{
 
 app.get("/url/emotion", (req,res) => {
     const analyzeParams = {
-        'url': 'http://www.ibm.com/us-en/',
-        'features': {
-            'emotion': {
-                'targets': [
-                    'ibm',
-                    'us'
-                ]
-            }
-        }
+        'url': req.query.url,
+        'features': { 'emotion': {} }
     };
 
     const nlu = getNLUInstance();
@@ -52,15 +45,8 @@ app.get("/url/emotion", (req,res) => {
 
 app.get("/url/sentiment", (req,res) => {
     const analyzeParams = {
-        'url': 'http://www.ibm.com/us-en/',
-        'features': {
-            'sentiment': {
-                'targets': [
-                    'ibm',
-                    'us'
-                ]
-            }
-        }
+        'url': req.query.url,
+        'features': { 'sentiment': {} }
     };
 
     const nlu = getNLUInstance();
@@ -75,15 +61,8 @@ app.get("/url/sentiment", (req,res) => {
 
 app.get("/text/emotion", (req,res) => {
     const analyzeParams = {
-        'text': 'I love apples! I do not like oranges.',
-        'features': {
-            'emotion': {
-                'targets': [
-                    'apples',
-                    'oranges'
-                ]
-            }
-        }
+        'text': req.query.text,
+        'features': { 'emotion': {} }
     };
 
     const nlu = getNLUInstance();
@@ -98,15 +77,8 @@ app.get("/text/emotion", (req,res) => {
 
 app.get("/text/sentiment", (req,res) => {
     const analyzeParams = {
-        'text': 'I love apples! I do not like oranges.',
-        'features': {
-            'sentiment': {
-                'targets': [
-                    'apples',
-                    'oranges'
-                ]
-            }
-        }
+        'text': req.query.text,
+        'features': { 'sentiment': {} }
     };
 
     const nlu = getNLUInstance();
