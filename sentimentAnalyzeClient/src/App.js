@@ -35,22 +35,23 @@ class App extends React.Component {
   sendForSentimentAnalysis = () => {
     this.setState({sentiment:true});
     let url = ".";
+    let text = document.getElementById("textinput").value;
 
     if(this.state.mode === "url") {
-      url = url+"/url/sentiment?url="+document.getElementById("textinput").value;
+      url = url+"/url/sentiment?url="+text;
     } else {
-      url = url+"/text/sentiment?text="+document.getElementById("textinput").value;
+        url = url+"/text/sentiment?text="+text;
     }
     fetch(url).then((response)=>{
         response.text().then((data)=>{
         this.setState({sentimentOutput:data});
         let output = data;
         if(data === "positive") {
-          output = <div style={{color:"green",fontSize:20}}>{data}</div>
+          output = <div style={{color:"green",fontSize:20}}>{text}</div>
         } else if (data === "negative"){
-          output = <div style={{color:"red",fontSize:20}}>{data}</div>
+          output = <div style={{color:"red",fontSize:20}}>{text}</div>
         } else {
-          output = <div style={{color:"orange",fontSize:20}}>{data}</div>
+          output = <div style={{color:"orange",fontSize:20}}>{text}</div>
         }
         this.setState({sentimentOutput:output});
       })});
@@ -70,7 +71,10 @@ class App extends React.Component {
       this.setState({sentimentOutput:<EmotionTable emotions={data}/>});
   })})  ;
   }
-  
+
+  componentDidMount(){
+    document.title = "Sentiment Analyzer";
+  }
 
   render() {
     return (  

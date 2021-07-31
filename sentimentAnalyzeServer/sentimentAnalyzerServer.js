@@ -28,20 +28,95 @@ app.get("/",(req,res)=>{
   });
 
 app.get("/url/emotion", (req,res) => {
+    const analyzeParams = {
+        'url': 'http://www.ibm.com/us-en/',
+        'features': {
+            'emotion': {
+                'targets': [
+                    'ibm',
+                    'us'
+                ]
+            }
+        }
+    };
 
-    return res.send({"happy":"90","sad":"10"});
+    const nlu = getNLUInstance();
+    nlu.analyze(analyzeParams)
+    .then(analysisResults => {
+        return res.send(analysisResults.result.emotion.document.emotion);
+    })
+    .catch(err => {
+        console.log('error:', err);
+    });
 });
 
 app.get("/url/sentiment", (req,res) => {
-    return res.send("url sentiment for "+req.query.url);
+    const analyzeParams = {
+        'url': 'http://www.ibm.com/us-en/',
+        'features': {
+            'sentiment': {
+                'targets': [
+                    'ibm',
+                    'us'
+                ]
+            }
+        }
+    };
+
+    const nlu = getNLUInstance();
+    nlu.analyze(analyzeParams)
+    .then(analysisResults => {
+        return res.send(analysisResults.result.sentiment.document.label);
+    })
+    .catch(err => {
+        console.log('error:', err);
+    });
 });
 
 app.get("/text/emotion", (req,res) => {
-    return res.send({"happy":"10","sad":"90"});
+    const analyzeParams = {
+        'text': 'I love apples! I do not like oranges.',
+        'features': {
+            'emotion': {
+                'targets': [
+                    'apples',
+                    'oranges'
+                ]
+            }
+        }
+    };
+
+    const nlu = getNLUInstance();
+    nlu.analyze(analyzeParams)
+    .then(analysisResults => {
+        return res.send(analysisResults.result.emotion.document.emotion);
+    })
+    .catch(err => {
+        console.log('error:', err);
+    });
 });
 
 app.get("/text/sentiment", (req,res) => {
-    return res.send("text sentiment for "+req.query.text);
+    const analyzeParams = {
+        'text': 'I love apples! I do not like oranges.',
+        'features': {
+            'sentiment': {
+                'targets': [
+                    'apples',
+                    'oranges'
+                ]
+            }
+        }
+    };
+
+    const nlu = getNLUInstance();
+    nlu.analyze(analyzeParams)
+    .then(analysisResults => {
+        return res.send(analysisResults.result.sentiment.document.label);
+    })
+    .catch(err => {
+        console.log('error:', err);
+    });
 });
 
 let server = app.listen(8080, () => {
